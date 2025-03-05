@@ -1,6 +1,8 @@
 package org.eulu.bookshop.repository;
 
 import java.util.List;
+
+import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.model.Book;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,12 +10,9 @@ import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
     private final SessionFactory sessionFactory;
-
-    public BookRepositoryImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     @Override
     public Book save(Book book) {
