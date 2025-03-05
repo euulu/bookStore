@@ -1,10 +1,9 @@
 package org.eulu.bookshop.service;
 
+import java.util.List;
 import org.eulu.bookshop.model.Book;
 import org.eulu.bookshop.repository.BookRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {

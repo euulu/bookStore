@@ -1,8 +1,7 @@
 package org.eulu.bookshop.service;
 
-import org.eulu.bookshop.model.Book;
-
 import java.util.List;
+import org.eulu.bookshop.model.Book;
 
 public interface BookService {
     Book save(Book book);

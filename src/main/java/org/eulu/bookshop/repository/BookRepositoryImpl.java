@@ -1,12 +1,11 @@
 package org.eulu.bookshop.repository;
 
+import java.util.List;
 import org.eulu.bookshop.model.Book;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class BookRepositoryImpl implements BookRepository {
