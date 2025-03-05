@@ -39,8 +39,7 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public List<Book> findAll() {
         try (Session session = sessionFactory.openSession()) {
-            String hql = "from Book";
-            return session.createQuery(hql, Book.class).getResultList();
+            return session.createQuery("from Book", Book.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Cannot retrieve data from books", e);
         }
