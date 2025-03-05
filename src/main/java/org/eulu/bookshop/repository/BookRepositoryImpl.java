@@ -1,8 +1,8 @@
 package org.eulu.bookshop.repository;
 
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
+import org.eulu.bookshop.exception.DataProcessingException;
 import org.eulu.bookshop.model.Book;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,7 +28,7 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Cannot save the book: " + book, e);
+            throw new DataProcessingException("Cannot save the book: " + book, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -42,7 +42,7 @@ public class BookRepositoryImpl implements BookRepository {
             String hql = "from Book";
             return session.createQuery(hql, Book.class).getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Cannot retrieve data from books", e);
+            throw new DataProcessingException("Cannot retrieve data from books", e);
         }
     }
 }
