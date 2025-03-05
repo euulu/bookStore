@@ -3,7 +3,6 @@ package org.eulu.bookshop.config;
 import java.util.Objects;
 import java.util.Properties;
 import javax.sql.DataSource;
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
