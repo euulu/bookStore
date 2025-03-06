@@ -1,9 +1,9 @@
 package org.eulu.bookshop.dto;
 
-import jakarta.persistence.Column;
-
 import java.math.BigDecimal;
+import lombok.Data;
 
+@Data
 public class BookDto {
     private String title;
     private String author;
