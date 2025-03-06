@@ -1,10 +1,11 @@
 package org.eulu.bookshop.service;
 
 import java.util.List;
-import org.eulu.bookshop.model.Book;
+import org.eulu.bookshop.dto.BookDto;
+import org.eulu.bookshop.dto.CreateBookRequestDto;
 
 public interface BookService {
-    Book save(Book book);
+    BookDto save(CreateBookRequestDto book);
 
-    List<Book> findAll();
+    List<BookDto> findAll();
 }
