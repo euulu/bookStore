@@ -1,6 +1,7 @@
 package org.eulu.bookshop.repository;
 
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.exception.DataProcessingException;
 import org.eulu.bookshop.model.Book;
@@ -33,6 +34,16 @@ public class BookRepositoryImpl implements BookRepository {
             if (session != null) {
                 session.close();
             }
+        }
+    }
+
+    @Override
+    public Optional<Book> findById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            Book optionalBook = session.get(Book.class, id);
+            return Optional.ofNullable(optionalBook);
+        } catch (Exception e) {
+            throw new DataProcessingException("Cannot find the book with id: " + id, e);
         }
     }
 
