@@ -1,8 +1,6 @@
 package org.eulu.bookshop.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.BookMapper;
 import org.eulu.bookshop.dto.BookDto;
