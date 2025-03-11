@@ -2,7 +2,7 @@ package org.eulu.bookshop.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.eulu.bookshop.BookMapper;
+import org.eulu.bookshop.mapper.BookMapper;
 import org.eulu.bookshop.dto.BookDto;
 import org.eulu.bookshop.dto.CreateBookRequestDto;
 import org.eulu.bookshop.exception.EntityNotFoundException;

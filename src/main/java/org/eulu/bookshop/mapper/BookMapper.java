@@ -1,4 +1,4 @@
-package org.eulu.bookshop;
+package org.eulu.bookshop.mapper;
 
 import org.eulu.bookshop.config.MapperConfig;
 import org.eulu.bookshop.dto.BookDto;
