@@ -1,48 +1,34 @@
 package org.eulu.bookshop.repository;
 
-import jakarta.persistence.criteria.Path;
-import jakarta.persistence.criteria.Predicate;
-import java.math.BigDecimal;
+import org.eulu.bookshop.dto.BookSearchParametersDto;
 import org.eulu.bookshop.model.Book;
+import org.eulu.bookshop.repository.book.AuthorSpecification;
+import org.eulu.bookshop.repository.book.IsbnSpecification;
+import org.eulu.bookshop.repository.book.PriceSpecification;
+import org.eulu.bookshop.repository.book.TitleSpecification;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BookSpecification {
-    public static Specification<Book> containsTitle(String providedTitle) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(
-                criteriaBuilder.lower(root.get("title")),
-                "%" + providedTitle.toLowerCase() + "%"
-        );
-    }
-
-    public static Specification<Book> containsAuthor(String providedAuthor) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(
-                criteriaBuilder.lower(root.get("author")),
-                "%" + providedAuthor.toLowerCase() + "%"
-        );
-    }
-
-    public static Specification<Book> hasIsbn(String providedIsbn) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(
-                root.get("isbn"),
-                providedIsbn
-        );
-    }
-
-    public static Specification<Book> isPriceInRange(
-            BigDecimal providedMinPrice,
-            BigDecimal providedMaxPrice
-    ) {
-        return (root, query, criteriaBuilder) -> {
-            Path<BigDecimal> price = root.get("price");
-            Predicate predicate = criteriaBuilder.conjunction();
-            if (providedMinPrice != null && providedMaxPrice != null) {
-                predicate = criteriaBuilder.between(price, providedMinPrice, providedMaxPrice);
-            } else if (providedMinPrice != null) {
-                predicate = criteriaBuilder.greaterThanOrEqualTo(price, providedMinPrice);
-            } else if (providedMaxPrice != null) {
-                predicate = criteriaBuilder.lessThanOrEqualTo(price, providedMaxPrice);
-            }
-            return predicate;
-        };
+    public Specification<Book> getSpecification(BookSearchParametersDto searchParameters) {
+        Specification<Book> spec = Specification.where(null);
+        if (searchParameters.title() != null && !searchParameters.title().trim().isEmpty()) {
+            spec = spec.and(TitleSpecification.containsTitle(searchParameters.title()));
+        }
+        if (searchParameters.author() != null && !searchParameters.author().trim().isEmpty()) {
+            spec = spec.and(AuthorSpecification.containsAuthor(searchParameters.author()));
+        }
+        if (searchParameters.isbn() != null && !searchParameters.isbn().trim().isEmpty()) {
+            spec = spec.and(IsbnSpecification.hasIsbn(searchParameters.isbn()));
+        }
+        if (searchParameters.minPrice() != null || searchParameters.maxPrice() != null) {
+            spec = spec.and(PriceSpecification.isPriceInRange(
+                            searchParameters.minPrice(),
+                            searchParameters.maxPrice()
+                    )
+            );
+        }
+        return spec;
     }
 }

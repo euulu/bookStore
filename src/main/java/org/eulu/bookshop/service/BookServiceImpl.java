@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final BookSpecification bookSpecification;
 
     @Override
     public BookDto save(CreateBookRequestDto book) {
@@ -42,23 +43,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> findAll(BookSearchParametersDto searchParameters) {
-        Specification<Book> spec = Specification.where(null);
-        if (searchParameters.title() != null && !searchParameters.title().trim().isEmpty()) {
-            spec = spec.and(BookSpecification.containsTitle(searchParameters.title()));
-        }
-        if (searchParameters.author() != null && !searchParameters.author().trim().isEmpty()) {
-            spec = spec.and(BookSpecification.containsAuthor(searchParameters.author()));
-        }
-        if (searchParameters.isbn() != null && !searchParameters.isbn().trim().isEmpty()) {
-            spec = spec.and(BookSpecification.hasIsbn(searchParameters.isbn()));
-        }
-        if (searchParameters.minPrice() != null || searchParameters.maxPrice() != null) {
-            spec = spec.and(BookSpecification.isPriceInRange(
-                            searchParameters.minPrice(),
-                            searchParameters.maxPrice()
-                    )
-            );
-        }
+        Specification<Book> spec = bookSpecification.getSpecification(searchParameters);
         return bookRepository.findAll(spec).stream()
                 .map(bookMapper::toDto)
                 .toList();
