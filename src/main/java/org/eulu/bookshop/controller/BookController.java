@@ -3,6 +3,7 @@ package org.eulu.bookshop.controller;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.BookDto;
+import org.eulu.bookshop.dto.BookSearchParametersDto;
 import org.eulu.bookshop.dto.CreateBookRequestDto;
 import org.eulu.bookshop.service.BookService;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,11 @@ public class BookController {
     @GetMapping
     public List<BookDto> getAll() {
         return bookService.findAll();
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+        return bookService.findAll(searchParameters);
     }
 
     @PutMapping("/{id}")

@@ -2,12 +2,15 @@ package org.eulu.bookshop.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.eulu.bookshop.mapper.BookMapper;
 import org.eulu.bookshop.dto.BookDto;
+import org.eulu.bookshop.dto.BookSearchParametersDto;
 import org.eulu.bookshop.dto.CreateBookRequestDto;
 import org.eulu.bookshop.exception.EntityNotFoundException;
+import org.eulu.bookshop.mapper.BookMapper;
 import org.eulu.bookshop.model.Book;
 import org.eulu.bookshop.repository.BookRepository;
+import org.eulu.bookshop.repository.BookSpecification;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,6 +36,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDto> findAll() {
         return bookRepository.findAll().stream()
+                .map(bookMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<BookDto> findAll(BookSearchParametersDto searchParameters) {
+        Specification<Book> spec = BookSpecification.getSpecification(searchParameters);
+        return bookRepository.findAll(spec).stream()
                 .map(bookMapper::toDto)
                 .toList();
     }
