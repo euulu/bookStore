@@ -7,12 +7,14 @@ import org.eulu.bookshop.model.Book;
 import org.springframework.data.jpa.domain.Specification;
 
 public class PriceSpecification {
+    private static final String PRICE_COL_NAME = "price";
+
     public static Specification<Book> isPriceInRange(
             BigDecimal providedMinPrice,
             BigDecimal providedMaxPrice
     ) {
         return (root, query, criteriaBuilder) -> {
-            Path<BigDecimal> price = root.get("price");
+            Path<BigDecimal> price = root.get(PRICE_COL_NAME);
             Predicate predicate = criteriaBuilder.conjunction();
             if (providedMinPrice != null && providedMaxPrice != null) {
                 predicate = criteriaBuilder.between(price, providedMinPrice, providedMaxPrice);
