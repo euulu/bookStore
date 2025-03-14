@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
-    private final BookSpecification bookSpecification;
 
     @Override
     public BookDto save(CreateBookRequestDto book) {
@@ -43,7 +42,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> findAll(BookSearchParametersDto searchParameters) {
-        Specification<Book> spec = bookSpecification.getSpecification(searchParameters);
+        Specification<Book> spec = BookSpecification.getSpecification(searchParameters);
         return bookRepository.findAll(spec).stream()
                 .map(bookMapper::toDto)
                 .toList();

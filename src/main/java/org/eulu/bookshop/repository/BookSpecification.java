@@ -7,11 +7,9 @@ import org.eulu.bookshop.repository.book.IsbnSpecification;
 import org.eulu.bookshop.repository.book.PriceSpecification;
 import org.eulu.bookshop.repository.book.TitleSpecification;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Component;
 
-@Component
 public class BookSpecification {
-    public Specification<Book> getSpecification(BookSearchParametersDto searchParameters) {
+    public static Specification<Book> getSpecification(BookSearchParametersDto searchParameters) {
         Specification<Book> spec = Specification.where(null);
         if (searchParameters.title() != null && !searchParameters.title().trim().isEmpty()) {
             spec = spec.and(TitleSpecification.containsTitle(searchParameters.title()));
