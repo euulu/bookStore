@@ -1,8 +1,8 @@
 package org.eulu.bookshop.exception;
 
-import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 
 public record FieldValidationErrorResponse(
         LocalDateTime timestamp,
