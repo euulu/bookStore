@@ -1,5 +1,6 @@
 package org.eulu.bookshop.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/books")
 @RequiredArgsConstructor
+@Tag(name = "Products")
 public class BookController {
     private final BookService bookService;
 
