@@ -38,18 +38,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
             summary = "Create a new book",
-            description = "Create a new book",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "201",
-                            description = "Book created successfully",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(
-                                            implementation = BookDto.class)
-                            )
-                    )
-            }
+            description = "Create a new book"
     )
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
@@ -58,17 +47,7 @@ public class BookController {
     @GetMapping("/{id}")
     @Operation(
             summary = "Get book by id",
-            description = "Retrieves detailed information about a specific book",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Book found",
-                            content = @Content(
-                                    schema = @Schema(
-                                            implementation = BookDto.class)
-                            )
-                    ),
-            }
+            description = "Retrieves detailed information about a specific book"
     )
     public BookDto getBookById(
             @Parameter(description = "Id of the book to retrieve", example = "42")
@@ -89,18 +68,7 @@ public class BookController {
     @GetMapping("/search")
     @Operation(
             summary = "Search books",
-            description = "Search books using various filters and parameters with pagination",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Successfully retrieved matching books",
-                            content = @Content(
-                                    array = @ArraySchema(
-                                            schema = @Schema(
-                                                    implementation = BookDto.class))
-                            )
-                    )
-            }
+            description = "Search books using various filters and parameters with pagination"
     )
     public List<BookDto> searchBooks(
             @ParameterObject BookSearchParametersDto searchParameters,
@@ -112,16 +80,7 @@ public class BookController {
     @PutMapping("/{id}")
     @Operation(
             summary = "Update book",
-            description = "Update existing book with new data",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Book updated successfully",
-                            content = @Content(
-                                    schema = @Schema(
-                                            implementation = BookDto.class))
-                    )
-            }
+            description = "Update existing book with new data"
     )
     public BookDto updateBook(
             @PathVariable Long id,
@@ -134,13 +93,7 @@ public class BookController {
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Delete a book by ID",
-            description = "Delete a book from the system",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "204",
-                            description = "Book deleted successfully"
-                    )
-            }
+            description = "Delete a book from the system"
     )
     public void deleteBook(@PathVariable Long id) {
         bookService.delete(id);
