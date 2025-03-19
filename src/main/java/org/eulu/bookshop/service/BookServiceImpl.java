@@ -1,6 +1,5 @@
 package org.eulu.bookshop.service;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.BookDto;
 import org.eulu.bookshop.dto.BookSearchParametersDto;
@@ -10,6 +9,7 @@ import org.eulu.bookshop.mapper.BookMapper;
 import org.eulu.bookshop.model.Book;
 import org.eulu.bookshop.repository.BookRepository;
 import org.eulu.bookshop.repository.BookSpecification;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -35,18 +35,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> findAll(Pageable pageable) {
-        return bookRepository.findAll(pageable).stream()
-                .map(bookMapper::toDto)
-                .toList();
+    public Page<BookDto> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable)
+                .map(bookMapper::toDto);
     }
 
     @Override
-    public List<BookDto> findAll(BookSearchParametersDto searchParameters, Pageable pageable) {
+    public Page<BookDto> findAll(BookSearchParametersDto searchParameters, Pageable pageable) {
         Specification<Book> spec = BookSpecification.getSpecification(searchParameters);
-        return bookRepository.findAll(spec, pageable).stream()
-                .map(bookMapper::toDto)
-                .toList();
+        return bookRepository.findAll(spec, pageable)
+                .map(bookMapper::toDto);
     }
 
     @Override
