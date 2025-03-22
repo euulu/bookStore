@@ -1,18 +1,19 @@
 package org.eulu.bookshop.service;
 
-import java.util.List;
 import org.eulu.bookshop.dto.BookDto;
 import org.eulu.bookshop.dto.BookSearchParametersDto;
 import org.eulu.bookshop.dto.CreateBookRequestDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface BookService {
     BookDto save(CreateBookRequestDto book);
 
     BookDto findById(Long id);
 
-    List<BookDto> findAll();
+    Page<BookDto> findAll(Pageable pageable);
 
-    List<BookDto> findAll(BookSearchParametersDto searchParameters);
+    Page<BookDto> findAll(BookSearchParametersDto searchParameters, Pageable pageable);
 
     BookDto update(Long id, CreateBookRequestDto requestDto);
 
