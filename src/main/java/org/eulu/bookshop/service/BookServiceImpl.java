@@ -1,9 +1,9 @@
 package org.eulu.bookshop.service;
 
 import lombok.RequiredArgsConstructor;
-import org.eulu.bookshop.dto.BookDto;
-import org.eulu.bookshop.dto.BookSearchParametersDto;
-import org.eulu.bookshop.dto.CreateBookRequestDto;
+import org.eulu.bookshop.dto.book.BookDto;
+import org.eulu.bookshop.dto.book.BookSearchParametersDto;
+import org.eulu.bookshop.dto.book.CreateBookRequestDto;
 import org.eulu.bookshop.exception.EntityNotFoundException;
 import org.eulu.bookshop.mapper.BookMapper;
 import org.eulu.bookshop.model.Book;

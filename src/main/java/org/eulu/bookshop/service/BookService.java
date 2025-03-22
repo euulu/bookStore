@@ -1,8 +1,8 @@
 package org.eulu.bookshop.service;
 
-import org.eulu.bookshop.dto.BookDto;
-import org.eulu.bookshop.dto.BookSearchParametersDto;
-import org.eulu.bookshop.dto.CreateBookRequestDto;
+import org.eulu.bookshop.dto.book.BookDto;
+import org.eulu.bookshop.dto.book.BookSearchParametersDto;
+import org.eulu.bookshop.dto.book.CreateBookRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
