@@ -18,7 +18,8 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Stri
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         String passwordValue = (String) new BeanWrapperImpl(value).getPropertyValue(passwordField);
-        String repeatPasswordValue = (String) new BeanWrapperImpl(value).getPropertyValue(repeatPasswordField);
+        String repeatPasswordValue = (String) new BeanWrapperImpl(value)
+                .getPropertyValue(repeatPasswordField);
 
         return passwordValue != null && passwordValue.equals(repeatPasswordValue);
     }
