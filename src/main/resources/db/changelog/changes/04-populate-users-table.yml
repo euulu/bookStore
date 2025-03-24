@@ -11,7 +11,7 @@ databaseChangeLog:
                   value: "admin@mail.com"
               - column:
                   name: password
-                  value: "$2a$10$dRT71ziiLr0nkvtV2bD31uy7x.YFg2hWxkaaergTKA4BJQ.Aqs1Nm"
+                  value: "$2a$10$xNh/hTGEy1TQh2yfyAyb8OJwvRApKPsDJQ66X8u/n86mdHQgZNHga"
               - column:
                   name: first_name
                   value: "admin"
@@ -29,7 +29,7 @@ databaseChangeLog:
                   value: "user@mail.com"
               - column:
                   name: password
-                  value: "$2a$10$dRT71ziiLr0nkvtV2bD31uy7x.YFg2hWxkaaergTKA4BJQ.Aqs1Nm"
+                  value: "$2a$10$xNh/hTGEy1TQh2yfyAyb8OJwvRApKPsDJQ66X8u/n86mdHQgZNHga"
               - column:
                   name: first_name
                   value: "user"
@@ -47,7 +47,7 @@ databaseChangeLog:
                   value: "user2@mail.com"
               - column:
                   name: password
-                  value: "$2a$10$dRT71ziiLr0nkvtV2bD31uy7x.YFg2hWxkaaergTKA4BJQ.Aqs1Nm"
+                  value: "$2a$10$xNh/hTGEy1TQh2yfyAyb8OJwvRApKPsDJQ66X8u/n86mdHQgZNHga"
               - column:
                   name: first_name
                   value: "user2"
