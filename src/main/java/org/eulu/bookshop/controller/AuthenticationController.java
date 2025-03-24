@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.appuser.UserDto;
-import org.eulu.bookshop.dto.appuser.CreateAppUserRequestDto;
+import org.eulu.bookshop.dto.appuser.CreateUserRequestDto;
 import org.eulu.bookshop.exception.RegistrationException;
 import org.eulu.bookshop.service.AppUserService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,7 @@ public class AuthenticationController {
             summary = "Register new user",
             description = "Register new user"
     )
-    public UserDto register(CreateAppUserRequestDto request) throws RegistrationException {
+    public UserDto register(CreateUserRequestDto request) throws RegistrationException {
         return userService.register(request);
     }
 }

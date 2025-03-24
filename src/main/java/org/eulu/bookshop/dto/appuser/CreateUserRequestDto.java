@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import org.eulu.bookshop.annotation.FieldMatch;
 
 @FieldMatch(password = "password", repeatPassword = "repeatPassword")
-public record CreateAppUserRequestDto(
+public record CreateUserRequestDto(
         @NotBlank
         @Email
         String email,
