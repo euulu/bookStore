@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @Data
 @Entity
@@ -18,6 +19,7 @@ public class AppUser {
     @Column(unique = true, nullable = false)
     private String email;
     @Column(nullable = false)
+    @Length(min = 6, max = 20)
     private String password;
     @Column(nullable = false)
     private String firstName;
