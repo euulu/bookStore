@@ -5,13 +5,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+<<<<<<< HEAD
 import jakarta.persistence.JoinColumn;
+=======
+>>>>>>> 13405d6 (Add role User field)
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.Collection;
+<<<<<<< HEAD
 import java.util.HashSet;
 import java.util.Set;
+=======
+import java.util.List;
+import java.util.Set;
+
+>>>>>>> 13405d6 (Add role User field)
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
