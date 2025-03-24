@@ -1,7 +1,7 @@
 package org.eulu.bookshop.service;
 
 import lombok.RequiredArgsConstructor;
-import org.eulu.bookshop.dto.appuser.AppUserDto;
+import org.eulu.bookshop.dto.appuser.UserDto;
 import org.eulu.bookshop.dto.appuser.CreateAppUserRequestDto;
 import org.eulu.bookshop.exception.RegistrationException;
 import org.eulu.bookshop.mapper.AppUserMapper;
@@ -16,7 +16,7 @@ public class AppUserServiceImpl implements AppUserService {
     private final AppUserMapper userMapper;
 
     @Override
-    public AppUserDto register(CreateAppUserRequestDto createAppUserRequestDto) {
+    public UserDto register(CreateAppUserRequestDto createAppUserRequestDto) {
         if (userRepository.findAppUsersByEmail(createAppUserRequestDto.email()).isPresent()) {
             throw new RegistrationException("Cannot register user");
         }
