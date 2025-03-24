@@ -1,4 +1,4 @@
-package org.eulu.bookshop.dto.appuser;
+package org.eulu.bookshop.dto.user;
 
 public record UserDto(
         Long id,

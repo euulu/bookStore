@@ -1,4 +1,4 @@
-package org.eulu.bookshop.dto.appuser;
+package org.eulu.bookshop.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

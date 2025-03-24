@@ -3,10 +3,10 @@ package org.eulu.bookshop.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.eulu.bookshop.dto.appuser.CreateUserRequestDto;
-import org.eulu.bookshop.dto.appuser.UserDto;
+import org.eulu.bookshop.dto.user.CreateUserRequestDto;
+import org.eulu.bookshop.dto.user.UserDto;
 import org.eulu.bookshop.exception.RegistrationException;
-import org.eulu.bookshop.service.AppUserService;
+import org.eulu.bookshop.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Tag(name = "Authentication", description = "Operations related to user authentication")
 public class AuthenticationController {
-    private final AppUserService userService;
+    private final UserService userService;
 
     @PostMapping("/registration")
     @Operation(
