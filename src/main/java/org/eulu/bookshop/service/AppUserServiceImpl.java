@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.appuser.UserDto;
 import org.eulu.bookshop.dto.appuser.CreateUserRequestDto;
 import org.eulu.bookshop.exception.RegistrationException;
-import org.eulu.bookshop.mapper.AppUserMapper;
+import org.eulu.bookshop.mapper.UserMapper;
 import org.eulu.bookshop.model.AppUser;
 import org.eulu.bookshop.repository.AppUserRepository;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AppUserServiceImpl implements AppUserService {
     private final AppUserRepository userRepository;
-    private final AppUserMapper userMapper;
+    private final UserMapper userMapper;
 
     @Override
     public UserDto register(CreateUserRequestDto createUserRequestDto) {

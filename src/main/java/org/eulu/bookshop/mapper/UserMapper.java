@@ -6,6 +6,6 @@ import org.eulu.bookshop.model.AppUser;
 import org.mapstruct.Mapper;
 
 @Mapper(config = MapperConfig.class)
-public interface AppUserMapper {
+public interface UserMapper {
     UserDto toDto(AppUser user);
 }
