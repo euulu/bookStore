@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto register(CreateUserRequestDto createUserRequestDto) {
         if (userRepository.existsUserByEmailEqualsIgnoreCase(createUserRequestDto.email())) {
-            throw new RegistrationException("Cannot register user "
-                    + "with email" + createUserRequestDto.email());
+            throw new RegistrationException("User with email: "
+                    + createUserRequestDto.email() + " already exists");
         }
         User user = userMapper.toEntity(createUserRequestDto);
         User savedUser = userRepository.save(user);
