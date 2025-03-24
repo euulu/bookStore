@@ -11,8 +11,8 @@ import org.hibernate.validator.constraints.Length;
 
 @Data
 @Entity
-@Table(name = "app_users")
-public class AppUser {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
