@@ -1,6 +1,6 @@
 package org.eulu.bookshop.repository;
 
-import org.eulu.bookshop.dto.BookSearchParametersDto;
+import org.eulu.bookshop.dto.book.BookSearchParametersDto;
 import org.eulu.bookshop.model.Book;
 import org.eulu.bookshop.repository.book.AuthorSpecification;
 import org.eulu.bookshop.repository.book.IsbnSpecification;

@@ -1,4 +1,4 @@
-package org.eulu.bookshop.dto;
+package org.eulu.bookshop.dto.book;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
