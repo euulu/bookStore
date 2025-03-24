@@ -1,0 +1,59 @@
+databaseChangeLog:
+  - changeSet:
+      id: populate-users-table
+      author: eulu
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: "admin@mail.com"
+              - column:
+                  name: password
+                  value: "$2a$10$dRT71ziiLr0nkvtV2bD31uy7x.YFg2hWxkaaergTKA4BJQ.Aqs1Nm"
+              - column:
+                  name: first_name
+                  value: "admin"
+              - column:
+                  name: last_name
+                  value: "user"
+              - column:
+                  name: shipping_address
+                  value: "123 admin street"
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: "user@mail.com"
+              - column:
+                  name: password
+                  value: "$2a$10$dRT71ziiLr0nkvtV2bD31uy7x.YFg2hWxkaaergTKA4BJQ.Aqs1Nm"
+              - column:
+                  name: first_name
+                  value: "user"
+              - column:
+                  name: last_name
+                  value: "simple"
+              - column:
+                  name: shipping_address
+                  value: "321 user street"
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: "user2@mail.com"
+              - column:
+                  name: password
+                  value: "$2a$10$dRT71ziiLr0nkvtV2bD31uy7x.YFg2hWxkaaergTKA4BJQ.Aqs1Nm"
+              - column:
+                  name: first_name
+                  value: "user2"
+              - column:
+                  name: last_name
+                  value: "simple2"
+              - column:
+                  name: shipping_address
+                  value: "159 simple user street"
