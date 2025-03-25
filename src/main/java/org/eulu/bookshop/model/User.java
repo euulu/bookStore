@@ -2,6 +2,7 @@ package org.eulu.bookshop.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,25 +32,26 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
     @Column(nullable = false)
-    @Length(min = 6, max = 20)
+    // TODO: what if max constraint validation?
+    // @Length(min = 6, max = 20)
+    @Length(min = 6)
     private String password;
     @Column(nullable = false)
     private String firstName;
     @Column(nullable = false)
     private String lastName;
     private String shippingAddress;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return roles;
     }
 
     @Override

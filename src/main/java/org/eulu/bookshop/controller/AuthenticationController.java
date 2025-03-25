@@ -8,7 +8,9 @@ import org.eulu.bookshop.dto.user.UserDto;
 import org.eulu.bookshop.exception.RegistrationException;
 import org.eulu.bookshop.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +28,8 @@ public class AuthenticationController {
             summary = "Register new user",
             description = "Register new user"
     )
-    public UserDto register(CreateUserRequestDto request) throws RegistrationException {
+    public UserDto register(@RequestBody CreateUserRequestDto request)
+            throws RegistrationException {
         return userService.register(request);
     }
 }
