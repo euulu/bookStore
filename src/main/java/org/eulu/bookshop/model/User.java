@@ -11,12 +11,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,8 +29,6 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
     @Column(nullable = false)
-    // TODO: what if max constraint validation?
-    // @Length(min = 6, max = 20)
     @Length(min = 6)
     private String password;
     @Column(nullable = false)
