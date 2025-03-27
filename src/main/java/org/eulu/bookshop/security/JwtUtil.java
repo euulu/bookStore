@@ -5,7 +5,6 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.function.Function;
@@ -17,16 +16,9 @@ import org.springframework.stereotype.Component;
 public class JwtUtil {
     @Value("${jwt.expiration}")
     private long expiration;
-    @Value("${jwt.secret}")
-    private String secretString;
-    private SecretKey secret;
+    private final SecretKey secret;
 
-    @PostConstruct
-    public void init() {
-        if (secretString == null || secretString.length() < 32) {
-            throw new IllegalArgumentException("JWT secret key "
-                    + "must be at least 32 characters long.");
-        }
+    public JwtUtil(@Value("${jwt.secret}") String secretString) {
         this.secret = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
     }
 
