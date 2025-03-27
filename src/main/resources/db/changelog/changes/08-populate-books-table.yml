@@ -1,0 +1,379 @@
+databaseChangeLog:
+  - changeSet:
+      id: populate-books-table
+      author: eulu
+      changes:
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "1984"
+              - column:
+                  name: author
+                  value: "George Orwell"
+              - column:
+                  name: isbn
+                  value: "9780451524935"
+              - column:
+                  name: price
+                  value: 12.99
+              - column:
+                  name: description
+                  value: "A dystopian novel set in a totalitarian society where critical thought is suppressed."
+              - column:
+                  name: cover_image
+                  value: "1984_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "To Kill a Mockingbird"
+              - column:
+                  name: author
+                  value: "Harper Lee"
+              - column:
+                  name: isbn
+                  value: "9780446310789"
+              - column:
+                  name: price
+                  value: 14.99
+              - column:
+                  name: description
+                  value: "A powerful story of racial injustice and moral growth in the American South."
+              - column:
+                  name: cover_image
+                  value: "mockingbird_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Great Gatsby"
+              - column:
+                  name: author
+                  value: "F. Scott Fitzgerald"
+              - column:
+                  name: isbn
+                  value: "9780743273565"
+              - column:
+                  name: price
+                  value: 15.99
+              - column:
+                  name: description
+                  value: "A tragic love story set against the backdrop of the roaring twenties."
+              - column:
+                  name: cover_image
+                  value: "gatsby_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "Pride and Prejudice"
+              - column:
+                  name: author
+                  value: "Jane Austen"
+              - column:
+                  name: isbn
+                  value: "9780141439518"
+              - column:
+                  name: price
+                  value: 11.50
+              - column:
+                  name: description
+                  value: "A classic romantic novel exploring love, marriage, and social expectations."
+              - column:
+                  name: cover_image
+                  value: "pride_prejudice_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Hobbit"
+              - column:
+                  name: author
+                  value: "J.R.R. Tolkien"
+              - column:
+                  name: isbn
+                  value: "9780547928227"
+              - column:
+                  name: price
+                  value: 16.99
+              - column:
+                  name: description
+                  value: "A fantasy adventure about a hobbit's unexpected journey with dwarves and a wizard."
+              - column:
+                  name: cover_image
+                  value: "hobbit_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "Brave New World"
+              - column:
+                  name: author
+                  value: "Aldous Huxley"
+              - column:
+                  name: isbn
+                  value: "9780060850524"
+              - column:
+                  name: price
+                  value: 13.75
+              - column:
+                  name: description
+                  value: "A novel about a futuristic society where technology and social conditioning control human life."
+              - column:
+                  name: cover_image
+                  value: "brave_new_world_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Catcher in the Rye"
+              - column:
+                  name: author
+                  value: "J.D. Salinger"
+              - column:
+                  name: isbn
+                  value: "9780316769174"
+              - column:
+                  name: price
+                  value: 14.25
+              - column:
+                  name: description
+                  value: "A coming-of-age story about teenage angst and alienation."
+              - column:
+                  name: cover_image
+                  value: "catcher_rye_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "Dune"
+              - column:
+                  name: author
+                  value: "Frank Herbert"
+              - column:
+                  name: isbn
+                  value: "9780441172719"
+              - column:
+                  name: price
+                  value: 17.50
+              - column:
+                  name: description
+                  value: "A science fiction epic set on a desert planet, exploring politics, religion, and ecology."
+              - column:
+                  name: cover_image
+                  value: "dune_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "Moby-Dick"
+              - column:
+                  name: author
+                  value: "Herman Melville"
+              - column:
+                  name: isbn
+                  value: "9781853260087"
+              - column:
+                  name: price
+                  value: 15.25
+              - column:
+                  name: description
+                  value: "A classic novel about a whaling ship's obsessive quest for revenge against a giant white whale."
+              - column:
+                  name: cover_image
+                  value: "moby_dick_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Alchemist"
+              - column:
+                  name: author
+                  value: "Paulo Coelho"
+              - column:
+                  name: isbn
+                  value: "9780062315007"
+              - column:
+                  name: price
+                  value: 13.99
+              - column:
+                  name: description
+                  value: "A philosophical novel about a young shepherd's journey to find his personal legend."
+              - column:
+                  name: cover_image
+                  value: "alchemist_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "Fahrenheit 451"
+              - column:
+                  name: author
+                  value: "Ray Bradbury"
+              - column:
+                  name: isbn
+                  value: "9781451673265"
+              - column:
+                  name: price
+                  value: 14.50
+              - column:
+                  name: description
+                  value: "A dystopian novel about a future where books are banned and burned."
+              - column:
+                  name: cover_image
+                  value: "fahrenheit_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Da Vinci Code"
+              - column:
+                  name: author
+                  value: "Dan Brown"
+              - column:
+                  name: isbn
+                  value: "9780307474278"
+              - column:
+                  name: price
+                  value: 16.25
+              - column:
+                  name: description
+                  value: "A thriller that combines art, history, and conspiracy theories."
+              - column:
+                  name: cover_image
+                  value: "da_vinci_code_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Picture of Dorian Gray"
+              - column:
+                  name: author
+                  value: "Oscar Wilde"
+              - column:
+                  name: isbn
+                  value: "9780141439570"
+              - column:
+                  name: price
+                  value: 12.75
+              - column:
+                  name: description
+                  value: "A Gothic philosophical novel exploring the nature of beauty, youth, and morality."
+              - column:
+                  name: cover_image
+                  value: "dorian_gray_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "The Hitchhiker's Guide to the Galaxy"
+              - column:
+                  name: author
+                  value: "Douglas Adams"
+              - column:
+                  name: isbn
+                  value: "9780345391803"
+              - column:
+                  name: price
+                  value: 13.50
+              - column:
+                  name: description
+                  value: "A comedic science fiction series about the absurdity of life, space, and everything."
+              - column:
+                  name: cover_image
+                  value: "hitchhikers_guide_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: "Animal Farm"
+              - column:
+                  name: author
+                  value: "George Orwell"
+              - column:
+                  name: isbn
+                  value: "9780451526342"
+              - column:
+                  name: price
+                  value: 11.99
+              - column:
+                  name: description
+                  value: "An allegorical novella critiquing totalitarian regimes through a farm of rebellious animals."
+              - column:
+                  name: cover_image
+                  value: "animal_farm_cover.jpg"
+              - column:
+                  name: is_deleted
+                  value: 0

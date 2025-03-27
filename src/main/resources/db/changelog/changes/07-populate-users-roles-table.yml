@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: populate-users-roles-table
+      author: eulu
+      changes:
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: "(SELECT id FROM users WHERE email = 'admin@mail.com')"
+              - column:
+                  name: role_id
+                  valueComputed: "(SELECT id FROM roles WHERE name = 'ROLE_ADMIN')"
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: "(select id from users where email = 'user@mail.com')"
+              - column:
+                  name: role_id
+                  valueComputed: "(select id from roles where name = 'ROLE_USER')"
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: "(select id from users where email = 'user2@mail.com')"
+              - column:
+                  name: role_id
+                  valueComputed: "(select id from roles where name = 'ROLE_USER')"
