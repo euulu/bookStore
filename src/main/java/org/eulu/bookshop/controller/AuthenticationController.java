@@ -6,7 +6,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.user.CreateUserRequestDto;
 import org.eulu.bookshop.dto.user.UserDto;
+import org.eulu.bookshop.dto.user.UserLoginRequestDto;
+import org.eulu.bookshop.dto.user.UserLoginResponseDto;
 import org.eulu.bookshop.exception.RegistrationException;
+import org.eulu.bookshop.security.AuthenticationService;
 import org.eulu.bookshop.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Authentication", description = "Operations related to user authentication")
 public class AuthenticationController {
     private final UserService userService;
+    private final AuthenticationService authService;
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
@@ -31,5 +35,14 @@ public class AuthenticationController {
     public UserDto register(@RequestBody @Valid CreateUserRequestDto request)
             throws RegistrationException {
         return userService.register(request);
+    }
+
+    @PostMapping("/login")
+    @Operation(
+            summary = "Login existed user",
+            description = "Login existed user"
+    )
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto request) {
+        return authService.authenticate(request);
     }
 }
