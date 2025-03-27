@@ -2,6 +2,7 @@ package org.eulu.bookshop.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.user.CreateUserRequestDto;
 import org.eulu.bookshop.dto.user.UserDto;
@@ -27,7 +28,7 @@ public class AuthenticationController {
             summary = "Register new user",
             description = "Register new user"
     )
-    public UserDto register(@RequestBody CreateUserRequestDto request)
+    public UserDto register(@RequestBody @Valid CreateUserRequestDto request)
             throws RegistrationException {
         return userService.register(request);
     }
