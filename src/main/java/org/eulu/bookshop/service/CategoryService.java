@@ -1,8 +1,9 @@
 package org.eulu.bookshop.service;
 
+import org.eulu.bookshop.dto.book.BookDto;
 import org.eulu.bookshop.dto.category.CategoryDto;
-import org.eulu.bookshop.dto.category.CategorySearchParametersDto;
 import org.eulu.bookshop.dto.category.CategoryRequestDto;
+import org.eulu.bookshop.dto.category.CategorySearchParametersDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,4 +19,6 @@ public interface CategoryService {
     CategoryDto update(Long id, CategoryRequestDto category);
 
     void deleteById(Long id);
+
+    Page<BookDto> getBooksByCategoryId(Long id, Pageable pageable);
 }
