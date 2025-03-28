@@ -1,12 +1,16 @@
 package org.eulu.bookshop.service.impl;
 
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.eulu.bookshop.dto.book.BookDto;
 import org.eulu.bookshop.dto.category.CategoryDto;
-import org.eulu.bookshop.dto.category.CategorySearchParametersDto;
 import org.eulu.bookshop.dto.category.CategoryRequestDto;
+import org.eulu.bookshop.dto.category.CategorySearchParametersDto;
 import org.eulu.bookshop.exception.EntityNotFoundException;
+import org.eulu.bookshop.mapper.BookMapper;
 import org.eulu.bookshop.mapper.CategoryMapper;
 import org.eulu.bookshop.model.Category;
+import org.eulu.bookshop.repository.BookRepository;
 import org.eulu.bookshop.repository.CategoryRepository;
 import org.eulu.bookshop.repository.CategorySpecification;
 import org.eulu.bookshop.service.CategoryService;
@@ -19,7 +23,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final BookRepository bookRepository;
     private final CategoryMapper categoryMapper;
+    private final BookMapper bookMapper;
 
     @Override
     public Page<CategoryDto> findAll(Pageable pageable) {
@@ -40,7 +46,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto getById(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cannot find category with id: " + id));
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Cannot find category with id: " + id));
         return categoryMapper.toDto(category);
     }
 
@@ -53,7 +60,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto update(Long id, CategoryRequestDto category) {
         Category categoryToUpdate = categoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cannot find category to update, id: " + id));
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Cannot find category to update, id: " + id));
         categoryMapper.updateCategoryFromDto(category, categoryToUpdate);
         Category savedCategory = categoryRepository.save(categoryToUpdate);
         return categoryMapper.toDto(savedCategory);
@@ -62,5 +70,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteById(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<BookDto> getBooksByCategoryId(Long id, Pageable pageable) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Cannot find category with id: " + id));
+        return bookRepository.findBooksByCategoriesContaining(Set.of(category), pageable)
+                .map(bookMapper::toDto);
     }
 }
