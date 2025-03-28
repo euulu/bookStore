@@ -1,4 +1,4 @@
-package org.eulu.bookshop.service;
+package org.eulu.bookshop.service.impl;
 
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,7 @@ import org.eulu.bookshop.model.Role;
 import org.eulu.bookshop.model.User;
 import org.eulu.bookshop.repository.RoleRepository;
 import org.eulu.bookshop.repository.UserRepository;
+import org.eulu.bookshop.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

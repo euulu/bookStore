@@ -1,4 +1,4 @@
-package org.eulu.bookshop.service;
+package org.eulu.bookshop.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.book.BookDto;
@@ -9,6 +9,7 @@ import org.eulu.bookshop.mapper.BookMapper;
 import org.eulu.bookshop.model.Book;
 import org.eulu.bookshop.repository.BookRepository;
 import org.eulu.bookshop.repository.BookSpecification;
+import org.eulu.bookshop.service.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
