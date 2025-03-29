@@ -37,7 +37,7 @@ public class CategoryController {
             summary = "Create a new category",
             description = "Create a new category"
     )
-    public CategoryDto createCategory(CategoryRequestDto categoryRequestDto) {
+    public CategoryDto createCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
         return categoryService.save(categoryRequestDto);
     }
 
@@ -82,7 +82,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(
             summary = "Update a category",
-            description = "Update existing cateogory with new data"
+            description = "Update existing category with new data"
     )
     public CategoryDto updateCategory(
             @PathVariable Long id,
