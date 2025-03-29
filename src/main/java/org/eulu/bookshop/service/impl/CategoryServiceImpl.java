@@ -17,7 +17,9 @@ import org.eulu.bookshop.service.CategoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +55,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto save(CategoryRequestDto category) {
+        if (categoryRepository.existsByName(category.name())) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "The category with this name already exists. Name: " + category.name()
+            );
+        }
         Category savedCategory = categoryRepository.save(categoryMapper.toEntity(category));
         return categoryMapper.toDto(savedCategory);
     }
