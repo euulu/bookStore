@@ -13,7 +13,9 @@ import org.eulu.bookshop.service.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +25,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto save(CreateBookRequestDto book) {
+        if (bookRepository.existsByIsbn(book.getIsbn())) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Book with this ISBN already exists. ISBN: " + book.getIsbn()
+            );
+        }
         Book savedBook = bookRepository.save(bookMapper.toModel(book));
         return bookMapper.toDto(savedBook);
     }
