@@ -1,6 +1,5 @@
 package org.eulu.bookshop.repository;
 
-import java.util.Set;
 import org.eulu.bookshop.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
