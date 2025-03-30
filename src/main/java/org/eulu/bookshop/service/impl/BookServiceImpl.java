@@ -1,5 +1,8 @@
 package org.eulu.bookshop.service.impl;
 
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.book.BookDto;
 import org.eulu.bookshop.dto.book.BookSearchParametersDto;
@@ -7,8 +10,10 @@ import org.eulu.bookshop.dto.book.CreateBookRequestDto;
 import org.eulu.bookshop.exception.EntityNotFoundException;
 import org.eulu.bookshop.mapper.BookMapper;
 import org.eulu.bookshop.model.Book;
+import org.eulu.bookshop.model.Category;
 import org.eulu.bookshop.repository.BookRepository;
 import org.eulu.bookshop.repository.BookSpecification;
+import org.eulu.bookshop.repository.CategoryRepository;
 import org.eulu.bookshop.service.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,17 +26,25 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
     private final BookMapper bookMapper;
 
     @Override
-    public BookDto save(CreateBookRequestDto book) {
-        if (bookRepository.existsByIsbn(book.getIsbn())) {
+    public BookDto save(CreateBookRequestDto bookRequestDto) {
+        if (bookRepository.existsByIsbn(bookRequestDto.getIsbn())) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
-                    "Book with this ISBN already exists. ISBN: " + book.getIsbn()
+                    "Book with this ISBN already exists. ISBN: " + bookRequestDto.getIsbn()
             );
         }
-        Book savedBook = bookRepository.save(bookMapper.toModel(book));
+        Book book = bookMapper.toModel(bookRequestDto);
+        Set<Category> categories = bookRequestDto.getCategoriesId().stream()
+                .map(categoryRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
+        book.setCategories(categories);
+        Book savedBook = bookRepository.save(book);
         return bookMapper.toDto(savedBook);
     }
 

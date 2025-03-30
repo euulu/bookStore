@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.Set;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -59,4 +60,10 @@ public class CreateBookRequestDto {
             requiredMode = Schema.RequiredMode.NOT_REQUIRED
     )
     private String coverImage;
+    @Schema(
+            description = "List of book categories",
+            example = "[1, 4, 8, 12]",
+            requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
+    private Set<Long> categoriesId;
 }
