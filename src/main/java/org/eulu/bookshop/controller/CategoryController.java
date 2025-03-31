@@ -37,7 +37,7 @@ public class CategoryController {
             summary = "Create a new category",
             description = "Create a new category"
     )
-    public CategoryDto createCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
+    public CategoryDto createCategory(@RequestBody @Valid CategoryRequestDto categoryRequestDto) {
         return categoryService.save(categoryRequestDto);
     }
 
