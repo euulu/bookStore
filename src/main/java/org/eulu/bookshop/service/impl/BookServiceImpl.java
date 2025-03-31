@@ -1,8 +1,8 @@
 package org.eulu.bookshop.service.impl;
 
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.book.BookDto;
 import org.eulu.bookshop.dto.book.BookSearchParametersDto;
@@ -18,9 +18,7 @@ import org.eulu.bookshop.service.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -31,19 +29,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto save(CreateBookRequestDto bookRequestDto) {
-        if (bookRepository.existsByIsbn(bookRequestDto.getIsbn())) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "Book with this ISBN already exists. ISBN: " + bookRequestDto.getIsbn()
-            );
-        }
         Book book = bookMapper.toModel(bookRequestDto);
-        Set<Category> categories = bookRequestDto.getCategoriesId().stream()
-                .map(categoryRepository::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
-        book.setCategories(categories);
+        Set<Category> bookCategories = getBookCategories(bookRequestDto.getCategoriesId());
+        book.setCategories(bookCategories);
         bookRepository.save(book);
         return bookMapper.toDto(book);
     }
@@ -82,5 +70,22 @@ public class BookServiceImpl implements BookService {
     @Override
     public void delete(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    private Set<Category> getBookCategories(Set<Long> categoryIds) {
+        if (categoryIds == null || categoryIds.isEmpty()) {
+            return new HashSet<>();
+        }
+        Set<Category> categories = new HashSet<>(categoryRepository.findAllById(categoryIds));
+        if (categories.size() != categoryIds.size()) {
+            List<Long> foundIds = categories.stream()
+                    .map(Category::getId)
+                    .toList();
+            List<Long> notFoundIds = categoryIds.stream()
+                    .filter(id -> !foundIds.contains(id))
+                    .toList();
+            throw new EntityNotFoundException("Categories not found with ids: " + notFoundIds);
+        }
+        return categories;
     }
 }
