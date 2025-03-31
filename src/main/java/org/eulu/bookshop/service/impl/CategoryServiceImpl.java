@@ -71,8 +71,8 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() ->
                         new EntityNotFoundException("Cannot find category to update, id: " + id));
         categoryMapper.updateCategoryFromDto(category, categoryToUpdate);
-        Category savedCategory = categoryRepository.save(categoryToUpdate);
-        return categoryMapper.toDto(savedCategory);
+        categoryRepository.save(categoryToUpdate);
+        return categoryMapper.toDto(categoryToUpdate);
     }
 
     @Override

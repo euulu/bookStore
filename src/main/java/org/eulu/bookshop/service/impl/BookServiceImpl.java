@@ -44,8 +44,8 @@ public class BookServiceImpl implements BookService {
                 .map(Optional::get)
                 .collect(Collectors.toSet());
         book.setCategories(categories);
-        Book savedBook = bookRepository.save(book);
-        return bookMapper.toDto(savedBook);
+        bookRepository.save(book);
+        return bookMapper.toDto(book);
     }
 
     @Override
@@ -75,8 +75,8 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() ->
                         new EntityNotFoundException("Cannot find the book with id: " + id));
         bookMapper.updateBookFromDto(requestDto, existingBook);
-        Book savedBook = bookRepository.save(existingBook);
-        return bookMapper.toDto(savedBook);
+        bookRepository.save(existingBook);
+        return bookMapper.toDto(existingBook);
     }
 
     @Override
