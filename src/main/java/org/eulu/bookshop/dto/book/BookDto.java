@@ -2,6 +2,7 @@ package org.eulu.bookshop.dto.book;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
+import java.util.Set;
 import lombok.Data;
 
 @Data
@@ -48,4 +49,9 @@ public class BookDto {
             format = "uri"
     )
     private String coverImage;
+    @Schema(
+            description = "List of category IDs associated with the book",
+            example = "[1, 2, 3]"
+    )
+    private Set<Long> categoryIds;
 }
