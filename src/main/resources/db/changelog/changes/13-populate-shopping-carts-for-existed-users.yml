@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: populate-shopping-carts-for-existed-users
+      author: eulu
+      changes:
+        - insert:
+            tableName: shopping_carts
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: "(select id from users where email = 'user@mail.com')"
+        - insert:
+            tableName: shopping_carts
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: "(select id from users where email = 'user2@mail.com')"
