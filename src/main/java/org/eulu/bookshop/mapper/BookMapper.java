@@ -39,4 +39,14 @@ public interface BookMapper {
                 .map(Category::getId)
                 .collect(Collectors.toSet());
     }
+
+    @Named("bookById")
+    default Book bookById(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Book book = new Book();
+        book.setId(id);
+        return book;
+    }
 }
