@@ -48,4 +48,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         entityManager.refresh(shoppingCart);
         return shoppingCartMapper.toDto(shoppingCart);
     }
+
+    @Override
+    public ShoppingCartDto findShoppingCart(Authentication authentication) {
+        User currentUser = (User) authentication.getPrincipal();
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser(currentUser)
+                .orElseThrow(() -> new EntityNotFoundException("No shopping cart found "
+                        + "for the user with id:" + currentUser.getId()));
+        return shoppingCartMapper.toDto(shoppingCart);
+    }
 }

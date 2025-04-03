@@ -10,11 +10,14 @@ import org.eulu.bookshop.service.ShoppingCartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/cart")
@@ -36,5 +39,15 @@ public class ShoppingCartController {
             @RequestBody @Valid CreateCartItemRequestDto cartItemRequest
     ) {
         return shoppingCartService.saveCartItem(authentication, cartItemRequest);
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @Operation(
+            summary = "Get shopping cart",
+            description = "Get current logged in user shopping cart"
+    )
+    public ShoppingCartDto getShoppingCart(Authentication authentication) {
+        return shoppingCartService.findShoppingCart(authentication);
     }
 }

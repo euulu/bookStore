@@ -9,4 +9,6 @@ public interface ShoppingCartService {
             Authentication authentication,
             CreateCartItemRequestDto createCartItemRequestDto
     );
+
+    ShoppingCartDto findShoppingCart(Authentication authentication);
 }
