@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.cartitem.CreateCartItemRequestDto;
+import org.eulu.bookshop.dto.cartitem.UpdateCartItemRequestDto;
 import org.eulu.bookshop.dto.shoppingcart.ShoppingCartDto;
 import org.eulu.bookshop.exception.EntityNotFoundException;
 import org.eulu.bookshop.mapper.CartItemMapper;
@@ -55,6 +56,24 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser(currentUser)
                 .orElseThrow(() -> new EntityNotFoundException("No shopping cart found "
                         + "for the user with id:" + currentUser.getId()));
+        return shoppingCartMapper.toDto(shoppingCart);
+    }
+
+    @Override
+    public ShoppingCartDto updateCartItem(
+            Long cartItemId,
+            UpdateCartItemRequestDto cartItemRequestDto
+    ) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new EntityNotFoundException("Cannot "
+                        + "find cart item with id: " + cartItemId));
+        cartItemMapper.updateCartItemFromDto(cartItemRequestDto, cartItem);
+        cartItemRepository.save(cartItem);
+        Long shoppingCartId = cartItem.getShoppingCart().getId();
+        ShoppingCart shoppingCart = shoppingCartRepository
+                .findById(shoppingCartId)
+                .orElseThrow(() -> new EntityNotFoundException("No shopping cart found "
+                        + "for the user with id:" + shoppingCartId));
         return shoppingCartMapper.toDto(shoppingCart);
     }
 }
