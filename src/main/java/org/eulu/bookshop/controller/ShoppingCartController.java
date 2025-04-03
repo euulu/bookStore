@@ -13,6 +13,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,5 +69,19 @@ public class ShoppingCartController {
             @RequestBody @Valid UpdateCartItemRequestDto cartItemRequestDto
     ) {
         return shoppingCartService.updateCartItem(cartItemId, cartItemRequestDto);
+    }
+
+    @DeleteMapping("/items/{cartItemId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @Operation(
+            summary = "Delete a cart item by ID",
+            description = "Delete a cart item from the system"
+    )
+    public void deleteCartItem(
+            @Parameter(description = "Cart item id to delete", example = "42")
+            @PathVariable Long cartItemId
+    ) {
+        shoppingCartService.deleteCartItem(cartItemId);
     }
 }
