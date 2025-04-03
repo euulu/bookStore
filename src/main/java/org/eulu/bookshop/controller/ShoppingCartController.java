@@ -39,7 +39,7 @@ public class ShoppingCartController {
             @RequestBody @Valid CreateCartItemRequestDto cartItemRequest
     ) {
         ShoppingCart shoppingCart = shoppingCartService
-                .addCartItem(authentication, cartItemRequest);
+                .saveCartItem(authentication, cartItemRequest);
         return shoppingCartMapper.toDto(shoppingCart);
     }
 }

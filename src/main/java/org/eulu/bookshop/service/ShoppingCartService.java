@@ -5,7 +5,7 @@ import org.eulu.bookshop.model.ShoppingCart;
 import org.springframework.security.core.Authentication;
 
 public interface ShoppingCartService {
-    ShoppingCart addCartItem(
+    ShoppingCart saveCartItem(
             Authentication authentication,
             CreateCartItemRequestDto createCartItemRequestDto
     );

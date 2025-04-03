@@ -27,7 +27,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional
-    public ShoppingCart addCartItem(
+    public ShoppingCart saveCartItem(
             Authentication authentication,
             CreateCartItemRequestDto createCartItemRequestDto
     ) {
