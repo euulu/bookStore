@@ -4,8 +4,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.cartitem.CreateCartItemRequestDto;
+import org.eulu.bookshop.dto.shoppingcart.ShoppingCartDto;
 import org.eulu.bookshop.exception.EntityNotFoundException;
 import org.eulu.bookshop.mapper.CartItemMapper;
+import org.eulu.bookshop.mapper.ShoppingCartMapper;
 import org.eulu.bookshop.model.CartItem;
 import org.eulu.bookshop.model.ShoppingCart;
 import org.eulu.bookshop.model.User;
@@ -23,11 +25,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final BookRepository bookRepository;
     private final CartItemMapper cartItemMapper;
+    private final ShoppingCartMapper shoppingCartMapper;
     private final EntityManager entityManager;
 
     @Override
     @Transactional
-    public ShoppingCart saveCartItem(
+    public ShoppingCartDto saveCartItem(
             Authentication authentication,
             CreateCartItemRequestDto createCartItemRequestDto
     ) {
@@ -43,8 +46,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItem.setShoppingCart(shoppingCart);
         cartItemRepository.save(cartItem);
         entityManager.refresh(shoppingCart);
-        return shoppingCartRepository.findShoppingCartByUser(currentUser)
-                .orElseThrow(() ->
-                        new IllegalStateException("Shopping cart disappeared after update"));
+        return shoppingCartMapper.toDto(shoppingCart);
     }
 }

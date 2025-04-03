@@ -6,8 +6,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.cartitem.CreateCartItemRequestDto;
 import org.eulu.bookshop.dto.shoppingcart.ShoppingCartDto;
-import org.eulu.bookshop.mapper.ShoppingCartMapper;
-import org.eulu.bookshop.model.ShoppingCart;
 import org.eulu.bookshop.service.ShoppingCartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Shopping cart", description = "Operations related to shopping cart management")
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
-    private final ShoppingCartMapper shoppingCartMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -38,8 +35,6 @@ public class ShoppingCartController {
             Authentication authentication,
             @RequestBody @Valid CreateCartItemRequestDto cartItemRequest
     ) {
-        ShoppingCart shoppingCart = shoppingCartService
-                .saveCartItem(authentication, cartItemRequest);
-        return shoppingCartMapper.toDto(shoppingCart);
+        return shoppingCartService.saveCartItem(authentication, cartItemRequest);
     }
 }
