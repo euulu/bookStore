@@ -9,6 +9,6 @@ public record CreateCartItemRequestDto(
         Long bookId,
         @NotNull
         @Positive
-        Integer quantity
+        int quantity
 ) {
 }

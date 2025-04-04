@@ -6,6 +6,6 @@ import jakarta.validation.constraints.Positive;
 public record UpdateCartItemRequestDto(
         @NotNull
         @Positive
-        Integer quantity
+        int quantity
 ) {
 }
