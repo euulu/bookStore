@@ -13,6 +13,7 @@ import org.eulu.bookshop.model.User;
 import org.eulu.bookshop.repository.RoleRepository;
 import org.eulu.bookshop.repository.ShoppingCartRepository;
 import org.eulu.bookshop.repository.UserRepository;
+import org.eulu.bookshop.service.ShoppingCartService;
 import org.eulu.bookshop.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final ShoppingCartRepository shoppingCartRepository;
+    private final ShoppingCartService shoppingCartService;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
@@ -37,9 +38,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(createUserRequestDto.password()));
         Role roleUser = roleRepository.findByName(Role.RoleName.ROLE_USER);
         user.setRoles(Set.of(roleUser));
-        ShoppingCart cart = new ShoppingCart();
-        cart.setUser(user);
-        shoppingCartRepository.save(cart);
+        shoppingCartService.createShoppingCart(user);
         userRepository.save(user);
         return userMapper.toDto(user);
     }

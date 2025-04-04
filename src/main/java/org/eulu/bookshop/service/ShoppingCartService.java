@@ -3,6 +3,7 @@ package org.eulu.bookshop.service;
 import org.eulu.bookshop.dto.cartitem.CreateCartItemRequestDto;
 import org.eulu.bookshop.dto.cartitem.UpdateCartItemRequestDto;
 import org.eulu.bookshop.dto.shoppingcart.ShoppingCartDto;
+import org.eulu.bookshop.model.User;
 import org.springframework.security.core.Authentication;
 
 public interface ShoppingCartService {
@@ -19,4 +20,6 @@ public interface ShoppingCartService {
     );
 
     void deleteCartItem(Long cartItemId);
+
+    void createShoppingCart(User user);
 }
