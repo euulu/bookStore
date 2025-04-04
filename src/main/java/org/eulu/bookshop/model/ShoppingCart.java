@@ -29,7 +29,7 @@ public class ShoppingCart {
     @JoinColumn(name = "user_id", nullable = false)
     @MapsId
     private User user;
-    @OneToMany(mappedBy = "shoppingCart", orphanRemoval = true)
+    @OneToMany(mappedBy = "shoppingCart")
     private Set<CartItem> cartItems = new HashSet<>();
     @Column(nullable = false, columnDefinition = "TINYINT")
     private boolean isDeleted = false;
