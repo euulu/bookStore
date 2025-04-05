@@ -9,8 +9,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long> {
     @EntityGraph(attributePaths = {"cartItems.book"})
     Optional<ShoppingCart> findShoppingCartByUser(User user);
-
-    @Override
-    @EntityGraph(attributePaths = "cartItems.book")
-    Optional<ShoppingCart> findById(Long id);
 }
