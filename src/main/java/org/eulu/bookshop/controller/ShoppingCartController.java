@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.cartitem.CreateCartItemRequestDto;
 import org.eulu.bookshop.dto.cartitem.UpdateCartItemRequestDto;
 import org.eulu.bookshop.dto.shoppingcart.ShoppingCartDto;
+import org.eulu.bookshop.model.User;
 import org.eulu.bookshop.service.ShoppingCartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -62,11 +63,14 @@ public class ShoppingCartController {
                     + "by cart item ID"
     )
     public ShoppingCartDto updateCartItem(
+            Authentication authentication,
             @Parameter(description = "Cart item id to update", example = "42")
             @PathVariable Long cartItemId,
             @RequestBody @Valid UpdateCartItemRequestDto cartItemRequestDto
     ) {
-        return shoppingCartService.updateCartItem(cartItemId, cartItemRequestDto);
+        User currentUser = (User) authentication.getPrincipal();
+        return shoppingCartService
+                .updateCartItem(currentUser.getId(), cartItemId, cartItemRequestDto);
     }
 
     @DeleteMapping("/items/{cartItemId}")
@@ -77,9 +81,11 @@ public class ShoppingCartController {
             description = "Delete a cart item from the system"
     )
     public void deleteCartItem(
+            Authentication authentication,
             @Parameter(description = "Cart item id to delete", example = "42")
             @PathVariable Long cartItemId
     ) {
-        shoppingCartService.deleteCartItem(cartItemId);
+        User currentUser = (User) authentication.getPrincipal();
+        shoppingCartService.deleteCartItem(currentUser.getId(), cartItemId);
     }
 }

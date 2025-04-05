@@ -15,11 +15,12 @@ public interface ShoppingCartService {
     ShoppingCartDto findShoppingCart(Authentication authentication);
 
     ShoppingCartDto updateCartItem(
+            Long userId,
             Long cartItemId,
             UpdateCartItemRequestDto cartItemRequestDto
     );
 
-    void deleteCartItem(Long cartItemId);
+    void deleteCartItem(Long userId, Long cartItemId);
 
     void createShoppingCart(User user);
 }

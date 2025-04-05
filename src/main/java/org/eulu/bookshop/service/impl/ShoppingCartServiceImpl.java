@@ -16,8 +16,10 @@ import org.eulu.bookshop.repository.BookRepository;
 import org.eulu.bookshop.repository.CartItemRepository;
 import org.eulu.bookshop.repository.ShoppingCartRepository;
 import org.eulu.bookshop.service.ShoppingCartService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -61,10 +63,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCartDto updateCartItem(
+            Long currentUserId,
             Long cartItemId,
             UpdateCartItemRequestDto cartItemRequestDto
     ) {
-        // TODO: check current user vs owner
+        validateCartItemOwnership(cartItemId, currentUserId);
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new EntityNotFoundException("Cannot "
                         + "find cart item with id: " + cartItemId));
@@ -79,10 +82,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void deleteCartItem(Long cartItemId) {
+    public void deleteCartItem(Long currentUserId, Long cartItemId) {
         if (!cartItemRepository.existsCartItemById(cartItemId)) {
             throw new EntityNotFoundException("Cannot find cart item with id: " + cartItemId);
         }
+        validateCartItemOwnership(cartItemId, currentUserId);
         cartItemRepository.deleteById(cartItemId);
     }
 
@@ -91,5 +95,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart cart = new ShoppingCart();
         cart.setUser(user);
         shoppingCartRepository.save(cart);
+    }
+
+    public void validateCartItemOwnership(Long cartItemId, Long userId) {
+        if (!cartItemRepository.existsByIdAndShoppingCart_User_Id(cartItemId, userId)) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "You cannot delete others cart items"
+            );
+        }
     }
 }
