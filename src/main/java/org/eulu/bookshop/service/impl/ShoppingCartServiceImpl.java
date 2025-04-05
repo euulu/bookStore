@@ -64,6 +64,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             Long cartItemId,
             UpdateCartItemRequestDto cartItemRequestDto
     ) {
+        // TODO: check current user vs owner
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new EntityNotFoundException("Cannot "
                         + "find cart item with id: " + cartItemId));

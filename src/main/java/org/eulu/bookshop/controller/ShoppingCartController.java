@@ -9,7 +9,6 @@ import org.eulu.bookshop.dto.cartitem.CreateCartItemRequestDto;
 import org.eulu.bookshop.dto.cartitem.UpdateCartItemRequestDto;
 import org.eulu.bookshop.dto.shoppingcart.ShoppingCartDto;
 import org.eulu.bookshop.service.ShoppingCartService;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -65,7 +64,6 @@ public class ShoppingCartController {
     public ShoppingCartDto updateCartItem(
             @Parameter(description = "Cart item id to update", example = "42")
             @PathVariable Long cartItemId,
-            @ParameterObject
             @RequestBody @Valid UpdateCartItemRequestDto cartItemRequestDto
     ) {
         return shoppingCartService.updateCartItem(cartItemId, cartItemRequestDto);
