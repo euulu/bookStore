@@ -1,5 +1,6 @@
 package org.eulu.bookshop.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,7 +30,7 @@ public class ShoppingCart {
     @JoinColumn(name = "user_id", nullable = false)
     @MapsId
     private User user;
-    @OneToMany(mappedBy = "shoppingCart")
+    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CartItem> cartItems = new HashSet<>();
     @Column(nullable = false, columnDefinition = "TINYINT")
     private boolean isDeleted = false;
