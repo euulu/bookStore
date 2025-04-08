@@ -78,7 +78,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser(currentUser)
                 .orElseThrow(() -> new EntityNotFoundException("No shopping cart found "
                         + "for the user with id:" + currentUser.getId()));
-        CartItem cartItem = cartItemRepository.findByIdAndShoppingCart(cartItemId, shoppingCart)
+        CartItem cartItem = shoppingCart.getCartItems().stream()
+                .filter(i -> i.getId().equals(cartItemId))
+                .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Cannot find cart item "
                         + "with id: " + cartItemId));
         cartItemMapper.updateCartItemFromDto(cartItemRequestDto, cartItem);
