@@ -7,11 +7,11 @@ databaseChangeLog:
             tableName: shopping_carts
             columns:
               - column:
-                  name: user_id
+                  name: id
                   valueComputed: "(select id from users where email = 'user@mail.com')"
         - insert:
             tableName: shopping_carts
             columns:
               - column:
-                  name: user_id
+                  name: id
                   valueComputed: "(select id from users where email = 'user2@mail.com')"
