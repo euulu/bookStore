@@ -26,9 +26,9 @@ import org.hibernate.annotations.SQLRestriction;
 public class ShoppingCart {
     @Id
     private Long id;
+    @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    @MapsId
     private User user;
     @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CartItem> cartItems = new HashSet<>();
