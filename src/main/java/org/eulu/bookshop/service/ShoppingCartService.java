@@ -15,7 +15,7 @@ public interface ShoppingCartService {
     ShoppingCartDto findShoppingCart(Authentication authentication);
 
     ShoppingCartDto updateCartItem(
-            Long userId,
+            Authentication authentication,
             Long cartItemId,
             UpdateCartItemRequestDto cartItemRequestDto
     );

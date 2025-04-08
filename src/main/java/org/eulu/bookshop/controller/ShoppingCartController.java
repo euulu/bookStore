@@ -68,9 +68,8 @@ public class ShoppingCartController {
             @PathVariable Long cartItemId,
             @RequestBody @Valid UpdateCartItemRequestDto cartItemRequestDto
     ) {
-        User currentUser = (User) authentication.getPrincipal();
         return shoppingCartService
-                .updateCartItem(currentUser.getId(), cartItemId, cartItemRequestDto);
+                .updateCartItem(authentication, cartItemId, cartItemRequestDto);
     }
 
     @DeleteMapping("/items/{cartItemId}")
