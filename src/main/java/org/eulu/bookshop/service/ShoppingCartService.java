@@ -4,18 +4,17 @@ import org.eulu.bookshop.dto.cartitem.CreateCartItemRequestDto;
 import org.eulu.bookshop.dto.cartitem.UpdateCartItemRequestDto;
 import org.eulu.bookshop.dto.shoppingcart.ShoppingCartDto;
 import org.eulu.bookshop.model.User;
-import org.springframework.security.core.Authentication;
 
 public interface ShoppingCartService {
     ShoppingCartDto saveCartItem(
-            Authentication authentication,
+            Long userId,
             CreateCartItemRequestDto createCartItemRequestDto
     );
 
-    ShoppingCartDto findShoppingCart(Authentication authentication);
+    ShoppingCartDto findShoppingCart(Long userId);
 
     ShoppingCartDto updateCartItem(
-            Authentication authentication,
+            Long userId,
             Long cartItemId,
             UpdateCartItemRequestDto cartItemRequestDto
     );

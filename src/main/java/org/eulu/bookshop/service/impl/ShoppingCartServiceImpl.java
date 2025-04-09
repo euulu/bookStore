@@ -16,10 +16,7 @@ import org.eulu.bookshop.repository.BookRepository;
 import org.eulu.bookshop.repository.CartItemRepository;
 import org.eulu.bookshop.repository.ShoppingCartRepository;
 import org.eulu.bookshop.service.ShoppingCartService;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Transactional
@@ -33,16 +30,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCartDto saveCartItem(
-            Authentication authentication,
+            Long userId,
             CreateCartItemRequestDto createCartItemRequestDto
     ) {
-        User currentUser = (User) authentication.getPrincipal();
-        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser(currentUser)
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser_Id(userId)
                 .orElseThrow(() -> new EntityNotFoundException("No shopping cart found "
-                        + "for the user with id:" + currentUser.getId()));
+                        + "for the user with id:" + userId));
         Book book = bookRepository.findById(createCartItemRequestDto.bookId())
                 .orElseThrow(() -> new EntityNotFoundException("Cannot find the book with id:"
-                        + currentUser.getId()));
+                        + userId));
         shoppingCart.getCartItems().stream()
                 .filter(cartItem -> cartItem.getBook().equals(book))
                 .findFirst()
@@ -59,28 +55,24 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCartDto findShoppingCart(Authentication authentication) {
-        User currentUser = (User) authentication.getPrincipal();
-        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser(currentUser)
+    public ShoppingCartDto findShoppingCart(Long userId) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser_Id(userId)
                 .orElseThrow(() -> new EntityNotFoundException("No shopping cart found "
-                        + "for the user with id:" + currentUser.getId()));
+                        + "for the user with id:" + userId));
         return shoppingCartMapper.toDto(shoppingCart);
     }
 
     @Override
     public ShoppingCartDto updateCartItem(
-            Authentication authentication,
+            Long userId,
             Long cartItemId,
             UpdateCartItemRequestDto cartItemRequestDto
     ) {
-        User currentUser = (User) authentication.getPrincipal();
-        validateCartItemOwnership(cartItemId, currentUser.getId());
-        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser(currentUser)
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser_Id(userId)
                 .orElseThrow(() -> new EntityNotFoundException("No shopping cart found "
-                        + "for the user with id:" + currentUser.getId()));
-        CartItem cartItem = shoppingCart.getCartItems().stream()
-                .filter(i -> i.getId().equals(cartItemId))
-                .findFirst()
+                        + "for the user with id:" + userId));
+        CartItem cartItem = cartItemRepository
+                .findByIdAndShoppingCart_Id(cartItemId, shoppingCart.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Cannot find cart item "
                         + "with id: " + cartItemId));
         cartItemMapper.updateCartItemFromDto(cartItemRequestDto, cartItem);
@@ -93,7 +85,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (!cartItemRepository.existsCartItemById(cartItemId)) {
             throw new EntityNotFoundException("Cannot find cart item with id: " + cartItemId);
         }
-        validateCartItemOwnership(cartItemId, currentUserId);
         cartItemRepository.deleteById(cartItemId);
     }
 
@@ -102,14 +93,5 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart cart = new ShoppingCart();
         cart.setUser(user);
         shoppingCartRepository.save(cart);
-    }
-
-    public void validateCartItemOwnership(Long cartItemId, Long userId) {
-        if (!cartItemRepository.existsByIdAndShoppingCart_User_Id(cartItemId, userId)) {
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN,
-                    "You cannot delete others cart items"
-            );
-        }
     }
 }

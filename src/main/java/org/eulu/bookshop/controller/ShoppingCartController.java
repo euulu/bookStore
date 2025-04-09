@@ -42,7 +42,8 @@ public class ShoppingCartController {
             Authentication authentication,
             @RequestBody @Valid CreateCartItemRequestDto cartItemRequest
     ) {
-        return shoppingCartService.saveCartItem(authentication, cartItemRequest);
+        User currentUser = (User) authentication.getPrincipal();
+        return shoppingCartService.saveCartItem(currentUser.getId(), cartItemRequest);
     }
 
     @GetMapping
@@ -52,7 +53,8 @@ public class ShoppingCartController {
             description = "Get current logged in user shopping cart"
     )
     public ShoppingCartDto getShoppingCart(Authentication authentication) {
-        return shoppingCartService.findShoppingCart(authentication);
+        User currentUser = (User) authentication.getPrincipal();
+        return shoppingCartService.findShoppingCart(currentUser.getId());
     }
 
     @PutMapping("/items/{cartItemId}")
@@ -68,8 +70,9 @@ public class ShoppingCartController {
             @PathVariable Long cartItemId,
             @RequestBody @Valid UpdateCartItemRequestDto cartItemRequestDto
     ) {
+        User currentUser = (User) authentication.getPrincipal();
         return shoppingCartService
-                .updateCartItem(authentication, cartItemId, cartItemRequestDto);
+                .updateCartItem(currentUser.getId(), cartItemId, cartItemRequestDto);
     }
 
     @DeleteMapping("/items/{cartItemId}")
