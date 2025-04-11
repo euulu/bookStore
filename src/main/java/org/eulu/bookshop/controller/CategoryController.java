@@ -9,7 +9,6 @@ import org.eulu.bookshop.dto.category.CategoryDto;
 import org.eulu.bookshop.dto.category.CategoryRequestDto;
 import org.eulu.bookshop.dto.category.CategorySearchParametersDto;
 import org.eulu.bookshop.service.CategoryService;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -47,7 +46,7 @@ public class CategoryController {
             summary = "Get all categories",
             description = "Get a pageable list of all available categories"
     )
-    public Page<CategoryDto> getAll(@ParameterObject Pageable pageable) {
+    public Page<CategoryDto> getAll(Pageable pageable) {
         return categoryService.findAll(pageable);
     }
 
@@ -59,8 +58,8 @@ public class CategoryController {
                     + "get pageable list of all filterred categories"
     )
     public Page<CategoryDto> search(
-            @ParameterObject CategorySearchParametersDto searchParameters,
-            @ParameterObject Pageable pageable
+            CategorySearchParametersDto searchParameters,
+            Pageable pageable
     ) {
         return categoryService.findAll(searchParameters, pageable);
     }

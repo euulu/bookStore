@@ -9,7 +9,6 @@ import org.eulu.bookshop.dto.book.BookDto;
 import org.eulu.bookshop.dto.book.BookSearchParametersDto;
 import org.eulu.bookshop.dto.book.CreateBookRequestDto;
 import org.eulu.bookshop.service.BookService;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -61,7 +60,7 @@ public class BookController {
             summary = "Get all books",
             description = "Retrieves a paginated list of all available books"
     )
-    public Page<BookDto> getAll(@ParameterObject Pageable pageable) {
+    public Page<BookDto> getAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 
@@ -72,8 +71,8 @@ public class BookController {
             description = "Search books using various filters and parameters with pagination"
     )
     public Page<BookDto> searchBooks(
-            @ParameterObject BookSearchParametersDto searchParameters,
-            @ParameterObject Pageable pageable
+            BookSearchParametersDto searchParameters,
+            Pageable pageable
     ) {
         return bookService.findAll(searchParameters, pageable);
     }
