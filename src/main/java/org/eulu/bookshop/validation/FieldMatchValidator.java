@@ -5,7 +5,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import org.eulu.bookshop.annotation.FieldMatch;
 import org.springframework.beans.BeanWrapperImpl;
 
-public class FieldMatchValidator implements ConstraintValidator<FieldMatch, String> {
+public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Object> {
     private String passwordField;
     private String repeatPasswordField;
 
@@ -16,11 +16,13 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Stri
     }
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        String passwordValue = (String) new BeanWrapperImpl(value).getPropertyValue(passwordField);
-        String repeatPasswordValue = (String) new BeanWrapperImpl(value)
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+        Object passwordValue = new BeanWrapperImpl(value).getPropertyValue(passwordField);
+        Object repeatPasswordValue = new BeanWrapperImpl(value)
                 .getPropertyValue(repeatPasswordField);
-
-        return passwordValue != null && passwordValue.equals(repeatPasswordValue);
+        if (passwordValue == null) {
+            return repeatPasswordValue == null;
+        }
+        return passwordValue.equals(repeatPasswordValue);
     }
 }
