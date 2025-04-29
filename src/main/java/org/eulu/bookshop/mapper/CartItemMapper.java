@@ -11,6 +11,8 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class, uses = BookMapper.class)
 public interface CartItemMapper {
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "shoppingCart", ignore = true)
     @Mapping(source = "bookId", target = "book", qualifiedByName = "bookById")
     CartItem toEntity(CreateCartItemRequestDto cartItemRequestDto);
 
