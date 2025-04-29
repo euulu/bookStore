@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface CategoryRepository extends JpaRepository<Category, Long>,
         JpaSpecificationExecutor<Category> {
     boolean existsByName(String name);
+
+    boolean existsCategoryById(Long id);
 }
