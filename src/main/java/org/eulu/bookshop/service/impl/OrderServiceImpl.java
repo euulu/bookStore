@@ -1,11 +1,14 @@
 package org.eulu.bookshop.service.impl;
 
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.order.CreateOrderRequestDto;
 import org.eulu.bookshop.dto.order.OrderDto;
 import org.eulu.bookshop.exception.EntityNotFoundException;
+import org.eulu.bookshop.mapper.OrderItemMapper;
 import org.eulu.bookshop.mapper.OrderMapper;
 import org.eulu.bookshop.model.Order;
+import org.eulu.bookshop.model.OrderItem;
 import org.eulu.bookshop.model.ShoppingCart;
 import org.eulu.bookshop.model.Status;
 import org.eulu.bookshop.model.User;
@@ -22,6 +25,7 @@ public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
     private final ShoppingCartRepository shoppingCartRepository;
     private final OrderMapper orderMapper;
+    private final OrderItemMapper orderItemMapper;
 
     @Override
     public OrderDto save(Long userId, CreateOrderRequestDto orderDto) {
@@ -36,7 +40,11 @@ public class OrderServiceImpl implements OrderService {
                 Status.PENDING,
                 shoppingCart.getCartItems()
         );
-        order.getOrderItems().forEach(item -> item.setOrder(order));
+        Set<OrderItem> orderItems = orderItemMapper.cartItemsToOrderItems(
+                shoppingCart.getCartItems(),
+                order
+        );
+        order.setOrderItems(orderItems);
         orderRepository.save(order);
         return orderMapper.toDto(order);
     }
