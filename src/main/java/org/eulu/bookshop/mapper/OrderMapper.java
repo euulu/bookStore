@@ -22,8 +22,8 @@ public interface OrderMapper {
     OrderDto toDto(Order order);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "user", source = "user")
-    @Mapping(target = "status", source = "status")
+    @Mapping(source = "user", target = "user")
+    @Mapping(source = "status", target = "status")
     @Mapping(source = "cartItems", target = "total", qualifiedByName = "calculateTotal")
     @Mapping(target = "orderDate", expression = "java(getLocalDateTimeNow())")
     @Mapping(source = "cartItems", target = "orderItems", qualifiedByName = "getOrderItems")
