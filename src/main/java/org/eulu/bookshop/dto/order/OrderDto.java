@@ -3,7 +3,7 @@ package org.eulu.bookshop.dto.order;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
-import org.eulu.bookshop.model.OrderItem;
+import org.eulu.bookshop.dto.orderitem.OrderItemDto;
 import org.eulu.bookshop.model.Status;
 
 public record OrderDto(
@@ -13,6 +13,6 @@ public record OrderDto(
         BigDecimal total,
         LocalDateTime orderDate,
         String shippingAddress,
-        Set<OrderItem> orderItems
+        Set<OrderItemDto> orderItems
 ) {
 }
