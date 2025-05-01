@@ -5,12 +5,15 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.order.CreateOrderRequestDto;
 import org.eulu.bookshop.dto.order.OrderDto;
+import org.eulu.bookshop.dto.order.UpdateOrderRequestDto;
 import org.eulu.bookshop.model.User;
 import org.eulu.bookshop.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,5 +50,18 @@ public class OrderController {
     public List<OrderDto> getOrder(Authentication authentication) {
         User currentUser = (User) authentication.getPrincipal();
         return orderService.get(currentUser.getId());
+    }
+
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Operation(
+            summary = "Update order status",
+            description = "Update order status by order id"
+    )
+    public OrderDto updateOrder(
+            @PathVariable Long id,
+            @RequestBody UpdateOrderRequestDto orderRequestDto
+    ) {
+        return orderService.update(id, orderRequestDto);
     }
 }

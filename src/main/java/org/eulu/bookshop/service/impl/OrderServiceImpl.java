@@ -5,6 +5,7 @@ import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.order.CreateOrderRequestDto;
 import org.eulu.bookshop.dto.order.OrderDto;
+import org.eulu.bookshop.dto.order.UpdateOrderRequestDto;
 import org.eulu.bookshop.exception.EntityNotFoundException;
 import org.eulu.bookshop.mapper.OrderItemMapper;
 import org.eulu.bookshop.mapper.OrderMapper;
@@ -57,5 +58,14 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findByUser(user).stream()
                 .map(orderMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public OrderDto update(Long orderId, UpdateOrderRequestDto orderRequestDto) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() ->
+                new EntityNotFoundException("Cannot find order with id: " + orderId));
+        order.setStatus(orderRequestDto.status());
+        orderRepository.save(order);
+        return orderMapper.toDto(order);
     }
 }
