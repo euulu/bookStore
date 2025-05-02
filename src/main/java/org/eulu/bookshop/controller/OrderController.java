@@ -79,4 +79,17 @@ public class OrderController {
     ) {
         return orderItemService.findByOrderId(orderId);
     }
+
+    @GetMapping("/{orderId}/items/{itemId}")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @Operation(
+            summary = "Get single order item",
+            description = "Get order item by id and order id"
+    )
+    public OrderItemDto getOrderItem(
+            @PathVariable(name = "orderId") Long orderId,
+            @PathVariable(name = "itemId") Long orderItemId
+    ) {
+        return orderItemService.findOrderItem(orderItemId, orderId);
+    }
 }
