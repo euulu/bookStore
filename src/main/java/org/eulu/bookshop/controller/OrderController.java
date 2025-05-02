@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.order.CreateOrderRequestDto;
 import org.eulu.bookshop.dto.order.OrderDto;
 import org.eulu.bookshop.dto.order.UpdateOrderRequestDto;
+import org.eulu.bookshop.dto.orderitem.OrderItemDto;
 import org.eulu.bookshop.model.User;
+import org.eulu.bookshop.service.OrderItemService;
 import org.eulu.bookshop.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    private final OrderItemService orderItemService;
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
@@ -63,5 +66,17 @@ public class OrderController {
             @RequestBody UpdateOrderRequestDto orderRequestDto
     ) {
         return orderService.update(id, orderRequestDto);
+    }
+
+    @GetMapping("/{id}/items")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @Operation(
+            summary = "Get order items",
+            description = "Get all order items from order by order id"
+    )
+    public List<OrderItemDto> getOrderItems(
+            @PathVariable(name = "id") Long orderId
+    ) {
+        return orderItemService.findByOrderId(orderId);
     }
 }
