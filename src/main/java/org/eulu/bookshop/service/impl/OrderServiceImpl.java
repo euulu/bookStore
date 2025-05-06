@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.order.CreateOrderRequestDto;
 import org.eulu.bookshop.dto.order.OrderDto;
 import org.eulu.bookshop.dto.order.UpdateOrderRequestDto;
+import org.eulu.bookshop.dto.orderitem.OrderItemDto;
 import org.eulu.bookshop.exception.EntityNotFoundException;
 import org.eulu.bookshop.mapper.OrderItemMapper;
 import org.eulu.bookshop.mapper.OrderMapper;
@@ -17,6 +18,7 @@ import org.eulu.bookshop.model.User;
 import org.eulu.bookshop.repository.OrderRepository;
 import org.eulu.bookshop.repository.ShoppingCartRepository;
 import org.eulu.bookshop.repository.UserRepository;
+import org.eulu.bookshop.service.OrderItemService;
 import org.eulu.bookshop.service.OrderService;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final ShoppingCartRepository shoppingCartRepository;
+    private final OrderItemService orderItemService;
     private final OrderMapper orderMapper;
     private final OrderItemMapper orderItemMapper;
 
@@ -67,5 +70,15 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(orderRequestDto.status());
         orderRepository.save(order);
         return orderMapper.toDto(order);
+    }
+
+    @Override
+    public List<OrderItemDto> getOrderItemsByOrderId(Long orderId) {
+        return orderItemService.findByOrderId(orderId);
+    }
+
+    @Override
+    public OrderItemDto getOrderItemByIdAndOrderId(Long orderItemId, Long orderId) {
+        return orderItemService.findOrderItem(orderItemId, orderId);
     }
 }

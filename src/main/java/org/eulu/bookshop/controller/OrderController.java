@@ -8,7 +8,6 @@ import org.eulu.bookshop.dto.order.OrderDto;
 import org.eulu.bookshop.dto.order.UpdateOrderRequestDto;
 import org.eulu.bookshop.dto.orderitem.OrderItemDto;
 import org.eulu.bookshop.model.User;
-import org.eulu.bookshop.service.OrderItemService;
 import org.eulu.bookshop.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
-    private final OrderItemService orderItemService;
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
@@ -77,7 +75,7 @@ public class OrderController {
     public List<OrderItemDto> getOrderItems(
             @PathVariable(name = "id") Long orderId
     ) {
-        return orderItemService.findByOrderId(orderId);
+        return orderService.getOrderItemsByOrderId(orderId);
     }
 
     @GetMapping("/{orderId}/items/{itemId}")
@@ -90,6 +88,6 @@ public class OrderController {
             @PathVariable(name = "orderId") Long orderId,
             @PathVariable(name = "itemId") Long orderItemId
     ) {
-        return orderItemService.findOrderItem(orderItemId, orderId);
+        return orderService.getOrderItemByIdAndOrderId(orderItemId, orderId);
     }
 }
