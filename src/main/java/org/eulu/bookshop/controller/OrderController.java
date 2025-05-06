@@ -1,6 +1,7 @@
 package org.eulu.bookshop.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.eulu.bookshop.dto.order.CreateOrderRequestDto;
@@ -36,7 +37,7 @@ public class OrderController {
     )
     public OrderDto createOrder(
             Authentication authentication,
-            @RequestBody CreateOrderRequestDto orderRequestDto
+            @RequestBody @Valid CreateOrderRequestDto orderRequestDto
     ) {
         User currentUser = (User) authentication.getPrincipal();
         return orderService.save(currentUser.getId(), orderRequestDto);
@@ -61,7 +62,7 @@ public class OrderController {
     )
     public OrderDto updateOrder(
             @PathVariable Long id,
-            @RequestBody UpdateOrderRequestDto orderRequestDto
+            @RequestBody @Valid UpdateOrderRequestDto orderRequestDto
     ) {
         return orderService.update(id, orderRequestDto);
     }
