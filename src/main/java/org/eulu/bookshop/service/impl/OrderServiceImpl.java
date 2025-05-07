@@ -16,10 +16,10 @@ import org.eulu.bookshop.model.OrderItem;
 import org.eulu.bookshop.model.ShoppingCart;
 import org.eulu.bookshop.model.Status;
 import org.eulu.bookshop.model.User;
+import org.eulu.bookshop.repository.OrderItemRepository;
 import org.eulu.bookshop.repository.OrderRepository;
 import org.eulu.bookshop.repository.ShoppingCartRepository;
 import org.eulu.bookshop.repository.UserRepository;
-import org.eulu.bookshop.service.OrderItemService;
 import org.eulu.bookshop.service.OrderService;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +28,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
     private final ShoppingCartRepository shoppingCartRepository;
-    private final OrderItemService orderItemService;
     private final OrderMapper orderMapper;
     private final OrderItemMapper orderItemMapper;
 
@@ -76,11 +76,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderItemDto> getOrderItemsByOrderId(Long orderId) {
-        return orderItemService.findByOrderId(orderId);
+        return orderItemRepository.findByOrder_Id(orderId).stream()
+                .map(orderItemMapper::toDto)
+                .toList();
     }
 
     @Override
     public OrderItemDto getOrderItemByIdAndOrderId(Long orderItemId, Long orderId) {
-        return orderItemService.findOrderItem(orderItemId, orderId);
+        OrderItem orderItem = orderItemRepository
+                .findByIdAndOrder_Id(orderItemId, orderId)
+                .orElseThrow(() -> new EntityNotFoundException("Cannot find order item with id: "
+                        + orderItemId));
+        return orderItemMapper.toDto(orderItem);
     }
 }
