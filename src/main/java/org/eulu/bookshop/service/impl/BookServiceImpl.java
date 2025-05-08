@@ -65,7 +65,8 @@ public class BookServiceImpl implements BookService {
         bookMapper.updateBookFromDto(requestDto, existingBook);
         Set<Long> categoriesId = requestDto.getCategoriesId();
         if (categoriesId != null && !categoriesId.isEmpty()) {
-            Set<Category> categories = new HashSet<>(categoryRepository.findAllById(requestDto.getCategoriesId()));
+            Set<Category> categories = new HashSet<>(
+                    categoryRepository.findAllById(requestDto.getCategoriesId()));
             existingBook.setCategories(categories);
         }
         bookRepository.save(existingBook);
